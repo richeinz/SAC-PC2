@@ -47,7 +47,6 @@ public class TestePersistirUsuario {
             u.setEmail("usuario1@gmail.com");
             u.setEndereco("Rua usuario1, 1 - Bairro centro - Carazinho - RS");
             u.setNome("Usuario1");
-            u.setTelefone("(54)33145678");
                     
             em.getTransaction().begin();
             em.persist(u);

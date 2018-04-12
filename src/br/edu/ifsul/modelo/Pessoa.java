@@ -6,13 +6,18 @@
 package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -60,14 +65,20 @@ public class Pessoa implements Serializable{
     @Column(name = "cpf", length = 14, nullable = false)
     private String cpf;
     
-    @Length(max = 20, message = "O telefone não pode ter mais que {max} caracteres")
-    @NotNull(message = "O telefone deve ser informado")
-    @NotBlank(message = "O telefone não pode ser em branco")
-    @Column(name = "telefone", length = 20, nullable = false)
-    private String telefone;
+   @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Telefone> telefones = new ArrayList<>();
     
     public Pessoa(){
         
+    }
+    
+    public void adicionarTelefone(Telefone obj){
+        obj.setPessoa(this);
+        this.telefones.add(obj);
+    }
+    
+    public void removerTelefone (int index){
+        this.telefones.remove(index);
     }
 
     public Integer getId() {
@@ -110,14 +121,15 @@ public class Pessoa implements Serializable{
         this.cpf = cpf;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public List<Telefone> getTelefones() {
+        return telefones;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setTelefones(List<Telefone> telefones) {
+        this.telefones = telefones;
     }
-    
+
+
     
     
     

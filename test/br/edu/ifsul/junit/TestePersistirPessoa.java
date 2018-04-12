@@ -42,7 +42,6 @@ public class TestePersistirPessoa {
             p.setEmail("ricardo.heinz@hotmail.com");
             p.setEndereco("Rua Dr. Loureiro da Silva, 186 - São Cristóvão - Passo Fundo - RS");
             p.setNome("Ricardo Heinz");
-            p.setTelefone("(54)999876543");
                     
             em.getTransaction().begin();
             em.persist(p);
