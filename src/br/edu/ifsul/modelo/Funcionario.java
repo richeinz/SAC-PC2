@@ -4,6 +4,8 @@ package br.edu.ifsul.modelo;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -19,6 +21,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "funcionario")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Funcionario extends Pessoa implements Serializable{
     
     @Length(max = 30, message = "O nomeUsuario não pode ter mais que {max} caracteres")
