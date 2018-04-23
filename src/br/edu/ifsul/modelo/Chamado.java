@@ -36,7 +36,7 @@ public class Chamado implements Serializable {
     @GeneratedValue(generator = "seq_chamado", strategy = GenerationType.SEQUENCE)
     private Integer id;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_hora_recebimento")
     private Calendar data_hora_recebimento;
 
@@ -44,16 +44,17 @@ public class Chamado implements Serializable {
     @Column(name = "data_ocorrencia")
     private Calendar data_ocorrencia;
 
+    
     @Column(name = "hora_ocorrencia", columnDefinition = "time")
     private Calendar hora_ocorrencia;
 
-    @Column(name = "retorno", nullable = false)
+    @Column(name = "retorno")
     private Integer retorno;//2 => sem retorno   1 => com retono
 
-    @Column(name = "local", nullable = false, length = 50)
+    @Column(name = "local", length = 50)
     private String local;
 
-    @Column(name = "sentido", nullable = false, columnDefinition = "text")
+    @Column(name = "sentido")
     private String sentido;
 
     @NotNull(message = "A descrição deve ser informada")
@@ -61,10 +62,10 @@ public class Chamado implements Serializable {
     @Column(name = "descricao", nullable = false, columnDefinition = "text")
     private String descricao;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private Integer status;//1-aberto 2-atribuído 3-fechado
 
-    @Column(name = "tipo", nullable = false)
+    @Column(name = "tipo")
     private Integer tipo;//1-reclamação 2-elogio 3-sugestão 4-denuncia
 
     @ManyToOne
@@ -84,16 +85,16 @@ public class Chamado implements Serializable {
 
     @ManyToMany
     @JoinTable(name = "funcionarioEnvolvido",
-            joinColumns = @JoinColumn(name = "chamado", referencedColumnName = "id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "funcionario", referencedColumnName = "id", nullable = false))
+            joinColumns = @JoinColumn(name = "chamado", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "funcionario", referencedColumnName = "id"))
     private List<Funcionario> funcionarioEnvolvido = new ArrayList<>();
 
     public Chamado() {
-
+        this.data_hora_recebimento = Calendar.getInstance();
     }
 
-    public Chamado(Calendar data_recebimento, Calendar hora_recebimento) {
-
+    public Chamado(Calendar data_hora_recebimento) {
+        
     }
 //Getters e Setter
     public Integer getStatus() {
@@ -125,7 +126,7 @@ public class Chamado implements Serializable {
     }
 
     public void setData_hora_recebimento(Calendar data_hora_recebimento) {
-        this.data_hora_recebimento = data_hora_recebimento;
+        this.data_hora_recebimento = Calendar.getInstance();
     }
 
     public Calendar getData_ocorrencia() {
