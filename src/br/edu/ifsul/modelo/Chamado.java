@@ -21,7 +21,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.ForeignKey;
 import org.hibernate.validator.constraints.NotBlank;
-import static org.joda.time.format.ISODateTimeFormat.date;
 
 /**
  *
@@ -67,6 +66,11 @@ public class Chamado implements Serializable {
 
     @Column(name = "tipo")
     private Integer tipo;//1-reclamação 2-elogio 3-sugestão 4-denuncia
+    
+    @ManyToOne
+    @JoinColumn(name = "reclamacao", referencedColumnName = "id")
+    @ForeignKey(name = "fk_reclamacao_id")
+    private Reclamacao reclamacao;
 
     @ManyToOne
     @JoinColumn(name = "usuario", referencedColumnName = "id")
@@ -225,5 +229,13 @@ public class Chamado implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public Reclamacao getReclamacao() {
+        return reclamacao;
+    }
+
+    public void setReclamacao(Reclamacao reclamacao) {
+        this.reclamacao = reclamacao;
     }
 }
