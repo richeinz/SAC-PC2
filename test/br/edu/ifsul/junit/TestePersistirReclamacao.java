@@ -1,8 +1,7 @@
+
 package br.edu.ifsul.junit;
 
-import br.edu.ifsul.modelo.Chamado;
-import br.edu.ifsul.modelo.Movimento;
-import br.edu.ifsul.modelo.Pessoa;
+import br.edu.ifsul.modelo.Reclamacao;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -10,18 +9,17 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author Ricardo
  */
-public class TestePersistirMovimento {
+public class TestePersistirReclamacao {
 
     EntityManagerFactory emf;
     EntityManager em;
 
-    public TestePersistirMovimento() {
+    public TestePersistirReclamacao() {
     }
 
     @Before
@@ -40,20 +38,12 @@ public class TestePersistirMovimento {
     public void testar(){
         boolean exception = false;
         try {
-             Movimento m = new Movimento();
-             m.setChamado(em.find(Chamado.class, 19));
-             m.setpessoa(em.find(Pessoa.class, 13));
-             m.setInformacao("Realizado abertura de chamado");
-             
-             Movimento m1 = new Movimento();
-             m1.setChamado(em.find(Chamado.class, 25));
-             m1.setpessoa(em.find(Pessoa.class, 14));
-             m1.setInformacao("Realizado abertura de chamado");
-             
+            Reclamacao r = new Reclamacao();
+            r.setDescricao("O motorista não parou na parada");
+            
                                
             em.getTransaction().begin();
-            em.persist(m);
-            em.persist(m1);
+            em.persist(r);
             em.getTransaction().commit();
         }catch(Exception e){
             exception = true;

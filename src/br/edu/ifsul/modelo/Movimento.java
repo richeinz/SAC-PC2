@@ -23,30 +23,32 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Ricardo
  */
 @Entity
-@Table(name = "movimento")
+//@Table(name = "movimento")
 public class Movimento implements Serializable{
     
     @Id
-    @SequenceGenerator(name = "seq_chamado", sequenceName = "seq_chamado_id", allocationSize = 1)
-    @GeneratedValue(generator = "seq_chamado", strategy = GenerationType.SEQUENCE)
+    //@SequenceGenerator(name = "seq_movimento", sequenceName = "seq_movimento_id", allocationSize = 1)
+    //@GeneratedValue(generator = "seq_movimento", strategy = GenerationType.SEQUENCE)
     private Integer id;
     
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "data_hora")
+    //@Column(name = "data_hora")
     private Calendar data_hora;
     
     @NotNull(message = "A informação deve ser preenchida")
     @NotBlank(message = "A informação não pode ser em branco")
-    @Column(name = "informação", nullable = false, columnDefinition = "text")
-    private String informação;
-     
-    @ManyToOne
-    @JoinColumn(name = "funcionario", referencedColumnName = "id")
-    @ForeignKey(name = "fK_funcionario_id")
-    private Funcionario funcionario;
+    //@Column(name = "informacao", nullable = false, columnDefinition = "text")
+    private String informacao;
+    
     
     @ManyToOne
-    @JoinColumn(name = "chamado_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "pessoa", referencedColumnName = "id")
+    @ForeignKey(name = "fK_pessoa_id")
+    private Pessoa pessoa;
+    
+    @ManyToOne
+    @JoinColumn(name = "chamado", referencedColumnName = "id", nullable = false)
+    @ForeignKey(name = "fK_chamado_id")
     private Chamado chamado;
 
     public Movimento() {
@@ -72,23 +74,14 @@ public class Movimento implements Serializable{
         this.data_hora = data_hora;
     }
 
-    public String getInformação() {
-        return informação;
+    public String getInformacao() {
+        return informacao;
     }
 
-    public void setInformação(String informação) {
-        this.informação = informação;
+    public void setInformacao(String informacao) {
+        this.informacao = informacao;
     }
 
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
-
-    
 
     public Chamado getChamado() {
         return chamado;
@@ -96,6 +89,14 @@ public class Movimento implements Serializable{
 
     public void setChamado(Chamado chamado) {
         this.chamado = chamado;
+    }
+    
+      public Pessoa getpessoa() {
+        return pessoa;
+    }
+
+    public void setpessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
     
     @Override
@@ -122,5 +123,7 @@ public class Movimento implements Serializable{
         }
         return true;
     }
+
+  
     
 }
