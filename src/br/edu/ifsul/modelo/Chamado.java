@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -43,7 +46,6 @@ public class Chamado implements Serializable {
     @Column(name = "data_ocorrencia")
     private Calendar data_ocorrencia;
 
-    
     @Column(name = "hora_ocorrencia", columnDefinition = "time")
     private Calendar hora_ocorrencia;
 
@@ -66,7 +68,7 @@ public class Chamado implements Serializable {
 
     @Column(name = "tipo")
     private Integer tipo;//1-reclamação 2-elogio 3-sugestão 4-denuncia
-    
+
     @ManyToOne
     @JoinColumn(name = "reclamacao", referencedColumnName = "id")
     @ForeignKey(name = "fk_reclamacao_id")
@@ -87,19 +89,30 @@ public class Chamado implements Serializable {
     @ForeignKey(name = "fk_onibus_id")
     private Onibus onibus;
 
-    @ManyToMany
-    @JoinTable(name = "funcionarioEnvolvido",
-            joinColumns = @JoinColumn(name = "chamado", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "funcionario", referencedColumnName = "id"))
-    private List<Funcionario> funcionarioEnvolvido = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "motorista", referencedColumnName = "id")
+    @ForeignKey(name = "fk_funcionario_id")
+    private Funcionario motorista;
+
+    @ManyToOne
+    @JoinColumn(name = "cobrador", referencedColumnName = "id")
+    @ForeignKey(name = "fk_funcionario_id")
+    private Funcionario cobrador;
+
+    @OneToMany(mappedBy = "chamado", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Movimento> movimentos = new ArrayList<>();
 
     public Chamado() {
         this.data_hora_recebimento = Calendar.getInstance();
+        this.status = 1;
     }
 
-    public Chamado(Calendar data_hora_recebimento) {
-        
+    public void adicionarMovimento(Movimento obj) {
+        obj.setChamado(this);
+        this.movimentos.add(obj);
+        System.out.println(obj);
     }
+
 //Getters e Setter
     public Integer getStatus() {
         return status;
@@ -205,12 +218,36 @@ public class Chamado implements Serializable {
         this.onibus = onibus;
     }
 
-    public List<Funcionario> getFuncionarioEnvolvido() {
-        return funcionarioEnvolvido;
+    public Reclamacao getReclamacao() {
+        return reclamacao;
     }
 
-    public void setFuncionarioEnvolvido(List<Funcionario> funcionarioEnvolvido) {
-        this.funcionarioEnvolvido = funcionarioEnvolvido;
+    public void setReclamacao(Reclamacao reclamacao) {
+        this.reclamacao = reclamacao;
+    }
+
+    public List<Movimento> getMovimentos() {
+        return movimentos;
+    }
+
+    public void setMovimentos(List<Movimento> movimentos) {
+        this.movimentos = movimentos;
+    }
+
+    public Funcionario getMotorista() {
+        return motorista;
+    }
+
+    public void setMotorista(Funcionario motorista) {
+        this.motorista = motorista;
+    }
+
+    public Funcionario getCobrador() {
+        return cobrador;
+    }
+
+    public void setCobrador(Funcionario cobrador) {
+        this.cobrador = cobrador;
     }
 
     @Override
@@ -231,11 +268,4 @@ public class Chamado implements Serializable {
         return true;
     }
 
-    public Reclamacao getReclamacao() {
-        return reclamacao;
-    }
-
-    public void setReclamacao(Reclamacao reclamacao) {
-        this.reclamacao = reclamacao;
-    }
 }

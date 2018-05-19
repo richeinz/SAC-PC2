@@ -3,7 +3,6 @@ package br.edu.ifsul.modelo;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Objects;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -27,8 +25,8 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Movimento implements Serializable{
     
     @Id
-    //@SequenceGenerator(name = "seq_movimento", sequenceName = "seq_movimento_id", allocationSize = 1)
-    //@GeneratedValue(generator = "seq_movimento", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "seq_movimento", sequenceName = "seq_movimento_id", allocationSize = 1)
+    @GeneratedValue(generator = "seq_movimento", strategy = GenerationType.SEQUENCE)
     private Integer id;
     
     @Temporal(TemporalType.TIMESTAMP)
@@ -40,11 +38,10 @@ public class Movimento implements Serializable{
     //@Column(name = "informacao", nullable = false, columnDefinition = "text")
     private String informacao;
     
-    
     @ManyToOne
-    @JoinColumn(name = "pessoa", referencedColumnName = "id")
-    @ForeignKey(name = "fK_pessoa_id")
-    private Pessoa pessoa;
+    @JoinColumn(name = "funcionario", referencedColumnName = "id")
+    @ForeignKey(name = "fK_funcionario_id")
+    private Funcionario funcionario;
     
     @ManyToOne
     @JoinColumn(name = "chamado", referencedColumnName = "id", nullable = false)
@@ -91,12 +88,12 @@ public class Movimento implements Serializable{
         this.chamado = chamado;
     }
     
-      public Pessoa getpessoa() {
-        return pessoa;
+   public Funcionario getFuncionario() {
+        return funcionario;
     }
 
-    public void setpessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
     
     @Override
@@ -124,6 +121,12 @@ public class Movimento implements Serializable{
         return true;
     }
 
-  
+    @Override
+    public String toString() {
+        return "Movimento{" + "id=" + id + ", data_hora=" + data_hora + ", informacao=" + informacao + ", funcionario=" + funcionario + ", chamado=" + chamado + '}';
+    }
     
+    
+    
+ 
 }
