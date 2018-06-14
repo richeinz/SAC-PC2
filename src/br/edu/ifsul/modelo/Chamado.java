@@ -13,8 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -64,7 +62,7 @@ public class Chamado implements Serializable {
     private String descricao;
 
     @Column(name = "status")
-    private Integer status;//1-aberto 2-atribuído 3-fechado
+    private Integer status;//1-aberto 2-setor 3-funcionario 4-fechado
 
     @Column(name = "tipo")
     private Integer tipo;//1-reclamação 2-elogio 3-sugestão 4-denuncia
@@ -101,6 +99,8 @@ public class Chamado implements Serializable {
 
     @OneToMany(mappedBy = "chamado", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Movimento> movimentos = new ArrayList<>();
+    
+    
 
     public Chamado() {
         this.data_hora_recebimento = Calendar.getInstance();

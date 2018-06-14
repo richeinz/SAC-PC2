@@ -40,7 +40,7 @@ public class TestePersistirSetor {
         boolean exception = false;
         try {
              Setor s = new Setor();
-             s.setDescricao("Trafego");
+             s.setDescricao("TI");
                                
             em.getTransaction().begin();
             em.persist(s);

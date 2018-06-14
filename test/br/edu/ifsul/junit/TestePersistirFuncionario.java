@@ -43,11 +43,11 @@ public class TestePersistirFuncionario {
             f.setCpf("542.230.789-00");
             f.setEmail("funcionario1@gmail.com");
             f.setEndereco("Rua Funcionario1, 1 - Bairro centro - Carazinho - RS");
-            f.setNome("Funcionario1");
-            f.setCargo("motorista");
-            f.setNomeUsuario("funcionario1.funcionario");
-            f.setSenha("123456");
-            f.setSetor(em.find(Setor.class, 1));
+            f.setNome("TI");
+            f.setCargo("Tecnico Informação");
+            f.setNomeUsuario("admin");
+            f.setSenha("admin");
+            f.setSetor(em.find(Setor.class, 2));
                     
             em.getTransaction().begin();
             em.persist(f);

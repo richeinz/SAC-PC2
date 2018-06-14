@@ -48,7 +48,8 @@ public class TestePersistirChamado {
             c.setData_hora_recebimento(Calendar.getInstance());
             c.setData_ocorrencia(Calendar.getInstance());
             c.setHora_ocorrencia(Calendar.getInstance(TimeZone.getDefault()));
-            c.setDescricao("Onibus não parou, mesmo eu acenando com a mão. O cobrador fez sinal com os braços para o motorista e mesmo assim ele não parou.");
+            c.setDescricao("Onibus não parou, mesmo eu acenando com a mão."
+                    + " O cobrador fez sinal com os braços para o motorista e mesmo assim ele não parou.");
             c.setLocal("Comercial");
             c.setRetorno(1);
             c.setSentido("Ptrópolis - Boqueirão");
@@ -67,6 +68,5 @@ public class TestePersistirChamado {
         }
         //vou verificar se o resultado é o esperado
         Assert.assertEquals(false, exception);
-    }
-    
+    }   
 }

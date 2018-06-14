@@ -84,6 +84,4 @@ public class Funcionario extends Pessoa implements Serializable{
         this.setor = setor;
     }
     
-    
-    
 }
